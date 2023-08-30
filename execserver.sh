@@ -4,7 +4,7 @@ cd $(dirname $0)
 docker build --file=- --tag=line-web-login:latest . <<EOF
 FROM node:18.17.1-bookworm
 RUN groupadd -g $(id -g) user && useradd -m -s /bin/bash -u $(id -u) -g $(id -g) user; exit 0
-RUN mkdir /.npm && chown $(id -g):$(id -u) /.npm
+RUN mkdir /.npm && chown -R $(id -u):$(id -g) /.npm
 USER $(id -u)
 WORKDIR /src
 RUN git clone https://github.com/sshomaaa/line-web-login.git app
