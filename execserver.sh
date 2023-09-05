@@ -13,5 +13,6 @@ docker run --rm \
     -it \
     -e "LINE_LOGIN_CHANNEL_ID=${LINE_LOGIN_CHANNEL_ID}" \
     -e "LINE_LOGIN_REDIRECT_URI=${LINE_LOGIN_REDIRECT_URI}" \
+    -e "LINE_LOGIN_STATE=${LINE_LOGIN_STATE}" \
     -p "9000:9000" \
 	line-web-login:latest
