@@ -47,16 +47,25 @@ app.get('/login', function (req, res) {
 
 app.get('/redirect_auth', function (req, res) {
     const channelId = process.env.LINE_LOGIN_CHANNEL_ID;
-    const redirectUri = encodeURI(process.env.LINE_LOGIN_REDIRECT_URI);
-    const state = req.id;
+    const redirectUri = process.env.LINE_LOGIN_REDIRECT_URI;
+    const encodedRedirectUri = encodeURI(redirectUri);
+    let state;
+    if (process.env.NODE_ENV === 'development') {
+        state = process.env.LINE_LOGIN_STATE ?? req.id;
+    } else {
+        state = req.id
+    }
     const scope = `openid%20profile`;
     const nonce = req.id;
     const authUrl = `https://access.line.me/oauth2/v2.1/authorize?response_type=code`
         + `&client_id=${channelId}`
-        + `&redirect_uri=${redirectUri}`
+        + `&redirect_uri=${encodedRedirectUri}`
         + `&state=${state}`
         + `&scope=${scope}`
         + `&nonce=${nonce}`;
+
+    console.log(`${currentTime()} [${req.id}] state = ${state}`);
+    console.log(`${currentTime()} [${req.id}] redirectUri = ${redirectUri}`);
     console.log(`${currentTime()} [${req.id}] authUrl = ${authUrl}`);
     res.redirect(authUrl);
 });
