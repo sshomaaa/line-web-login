@@ -49,12 +49,7 @@ app.get('/redirect_auth', function (req, res) {
     const channelId = process.env.LINE_LOGIN_CHANNEL_ID;
     const redirectUri = process.env.LINE_LOGIN_REDIRECT_URI;
     const encodedRedirectUri = encodeURI(redirectUri);
-    let state;
-    if (process.env.NODE_ENV === 'development') {
-        state = process.env.LINE_LOGIN_STATE ?? req.id;
-    } else {
-        state = req.id
-    }
+    const state = process.env.LINE_LOGIN_STATE ?? req.id;
     const scope = `openid%20profile`;
     const nonce = req.id;
     const authUrl = `https://access.line.me/oauth2/v2.1/authorize?response_type=code`
