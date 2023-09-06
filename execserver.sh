@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 cd $(dirname $0)
 
-docker build --file=- --tag=line-web-login:latest . <<EOF
+docker build --no-cache --file=- --tag=line-web-login:latest . <<EOF
 FROM node:18.17.1-bookworm
 RUN git clone https://github.com/sshomaaa/line-web-login.git src
 WORKDIR /src
